@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+    <script src="/static/jquery-1.10.1.min.js">
+    </script>
+<script>
+function AjaxFormSubmit(){
+var formData = new FormData(document.querySelector('#login')); // Create an arbitrary FormData instance
+//formData.append("username", $("#username").val());
+//formData.append("password", $("#password").val());
+
+
+	$.ajax({
+type: "POST",
+enctype: 'multipart/form-data',
+url: "/user/login",
+data: formData,
+processData: false,
+contentType: false,
+cache: false,
+success: function (response) { console.log(response);location.href = '/upload.html';  },
+error: function (jqXHR, textStatus, errorMessage ) { $("#result").html(errorMessage); }
+	});
+}
+
+</script>
+</head>
+<body>
+<form action="" method="post" modelAttribute="user" id="login">
+    用户名:<input id="userbame" name="username" type="text"/><br>
+    密码:<input id="password" name="password" type="password"> <br>
+</form>
+    <button  onclick="AjaxFormSubmit()">登录</button>
+<div id="result"></div>
+</body>

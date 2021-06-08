@@ -23,6 +23,7 @@ public class RabbitMqConfig {
 
     /** 消息交换机的名字*/
     public static final String EXCHANGE = "exchangeTest";
+    public static final String EXCHANGE_FANOUT = "exchange_fanout";
     /*对列名称*/
     public static final String QUEUE_NAME1 = "first-queue";
     public static final String QUEUE_NAME2 = "second-queue";
@@ -53,7 +54,7 @@ public class RabbitMqConfig {
      */
     @Bean
     public Binding binding_one() {
-        return BindingBuilder.bind(queueConfig.firstQueue()).to(exchangeConfig.directExchange()).with(RabbitMqConfig.ROUTINGKEY1);
+        return BindingBuilder.bind(queueConfig.firstQueue()).to(exchangeConfig.fanoutExchange());
     }
 
     /**

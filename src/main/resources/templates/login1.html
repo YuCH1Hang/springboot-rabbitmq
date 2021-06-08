@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+    <script src="/static/jquery-1.10.1.min.js"/>
+<script>
+function AjaxFormSubmit(){
+txtname=$("#username").val();
+txtpassword=$("#password").val();
+$.post("/user/login",{ username:txtname, password: txtpassword },
+ processData: false,
+ contentType: false
+ }).done(function (response) {
+   if (response.Status === "success") {
+	//location.href = '/upload.html';
+        $("#result").html("ok.");
+   } else {
+        $("#result").html("failed.");
+      }
+    });
+}
+
+</script>
+</head>
+<body>
+<form action="/user/login" method="post" modelAttribute="user">
+    用户名:<input name="username" type="text"/><br>
+    密码:<input name="password" type="password"> <br>
+    <input type="submit" value="登录" >
+</form>
+<div name="result"></div>
+</body>

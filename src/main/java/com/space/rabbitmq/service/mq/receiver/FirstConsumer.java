@@ -1,4 +1,4 @@
-package com.space.rabbitmq.receiver;
+package com.space.rabbitmq.service.mq.receiver;
 
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -17,9 +17,9 @@ public class FirstConsumer {
      * queues  指定从哪个队列（queue）订阅消息
      * @param message
      */
-    @RabbitListener(queues = {"first-queue"})
+    /*@RabbitListener(queues = {"first-queue"})
     public void handleMessage(Message message){
         // 处理消息
         System.out.println("FirstConsumer {} handleMessage :"+message);
-    }
+    }*/
 }

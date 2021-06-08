@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>上传文件</title>
+        <script src="/static/jquery-1.10.1.min.js">
+		    </script>
+<script>
+var timer;
+var count;
+function start(ts)
+{
+  timer = setInterval(function() {
+	  $.ajax({
+		          type: "GET",
+		          url: "/status/"+ts,
+		          data: "",
+		          processData: false,
+		          contentType: false,
+		          cache: false,
+		          success: function (response) { console.log(response);$("#img").attr("src", "/files/"+response.message);clearInterval(timer);timer=null;  },
+
+		  error: function ( xhr, status) { console.log(xhr);console.log(status); count=count+1; if(count>10) {clearInterval(timer);timer=null;$("#result").html("failed."); }}
+	  });
+		        }, 1000);
+}
+// Submit form data via Ajax
+function submit_1() {
+    var fileSelect = document.getElementById('file-select');
+	// Get the selected files from the input.
+	var files = fileSelect.files;
+	        // Get form
+	        //var form =document.querySelector('#upload1'); 
+	 
+	       // Create an FormData object 
+	        var data = new FormData();
+data.append('file', files[0], files[0].name);
+	console.log(data);
+$.ajax({
+	type: "POST",
+	enctype: 'multipart/form-data',
+	url: "/upload",
+	data: data,
+	processData: false,
+	contentType: false,
+	cache: false,
+	success: function (response) { console.log(response);$("#result").html(response.message);  start(response.message);},
+	error: function ( xhr, status) { console.log(xhr);console.log(status);$("#result").html(xhr.responseJSON.message); }
+});
+	
+}
+// Submit form data via Ajax
+function submit_multi() {
+    var fileSelects = document.getElementById('files');
+	// Get the selected files from the input.
+	var data = new FormData();
+	var n=0;
+	
+	// Loop through each of the selected files.
+	for (var i = 0; i < fileSelects.files.length; i++) {
+	  data.append( 'files',fileSelects.files[i],fileSelects.files[i].name);
+	  n++;
+        }
+	if(n>0)
+	{
+	console.log(data.getAll("files"));
+$.ajax({
+	type: "POST",
+	enctype: 'multipart/form-data',
+	url: "/multi-upload",
+	data: data,
+	processData: false,
+	contentType: false,
+	cache: false,
+	success: function (response) { console.log(response);$("#result").html(response.message);  start(response.message);},
+	error: function ( xhr, status) { console.log(xhr);console.log(status);$("#result").html(xhr.responseJSON.message); }
+});
+}
+}
+</script>
+</head>
+<body>
+<center>
+    <h3>上传单个文件</h3>
+    <form action="#" method="POST" id="upload1"  enctype="multipart/form-data">
+	    <label>Select one file:</label>
+        <input type="file" name="file" id="file-select" required><br>
+    </form>
+	<button  onclick="submit_1()" >上传单个文件 </button>
+    <hr>
+    <h3>上传多个文件</h3>
+    <form action="/multi-upload"  method="POST" id="upload2" enctype="multipart/form-data" >
+	    <label>Select Multiple files:</label>
+	    <input type="file" id="files" name="files" multiple/><br>
+    </form>
+	<button  onclick="submit_multi()" >上传多个文件</button>
+</center>
+<div id="result"> </div>
+<div >
+<img src="" id="img" alt="waiting.png">
+</div>
+</body>
+</html>

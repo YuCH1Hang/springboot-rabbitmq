@@ -1,6 +1,6 @@
 package com.space.rabbitmq.controller;
 
-import com.space.rabbitmq.sender.FirstSender;
+import com.space.rabbitmq.service.mq.sender.FirstSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

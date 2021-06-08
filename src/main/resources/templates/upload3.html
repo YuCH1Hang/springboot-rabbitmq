@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>上传文件</title>
+        <script src="/static/jquery-1.10.1.min.js">
+		    </script>
+<script>
+
+// Submit form data via Ajax
+function submitSomething() {
+    var fileSelect = document.getElementById('file-select');
+	// Get the selected files from the input.
+	var files = fileSelect.files;
+	        // Get form
+	        //var form =document.querySelector('#upload1'); 
+	 
+	       // Create an FormData object 
+	        var data = new FormData();
+data.append('file', files[0], files[0].name);
+	console.log(data);
+$.post(
+	"/upload",
+	 data,
+	 function (response, status, jqXHR) { console.log(response);$("#result").innerHTML=response;  }
+	);
+}
+
+</script>
+</head>
+<body>
+<center>
+    <h3>上传单个文件</h3>
+    <form action="#" method="POST" id="upload1"  enctype="multipart/form-data">
+        <input type="file" name="file" id="file-select" required><br>
+	<button  onclick="submitSomething()"  >上传单个文件 </button>
+    </form>
+    <hr>
+    <h3>上传多个文件</h3>
+    <form action="/multi-upload" enctype="multipart/form-data" method="post">
+        <input type="file" name="files" required><br>
+        <input type="file" name="files" required><br>
+        <input type="file" name="files" required><br>
+        <input type="submit" value="上传多个文件">
+    </form>
+</center>
+<div id="result"> </div>
+</body>
+</html>

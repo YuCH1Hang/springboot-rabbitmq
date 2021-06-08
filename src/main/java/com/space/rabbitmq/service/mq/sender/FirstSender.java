@@ -1,4 +1,4 @@
-package com.space.rabbitmq.sender;
+package com.space.rabbitmq.service.mq.sender;
 
 import com.space.rabbitmq.config.RabbitMqConfig;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +33,7 @@ public class FirstSender {
          * RabbitMqConfig.EXCHANGE  指定消息交换机
          * RabbitMqConfig.ROUTINGKEY2  指定队列key2
          */
-        rabbitTemplate.convertAndSend(RabbitMqConfig.EXCHANGE, RabbitMqConfig.ROUTINGKEY1,
+        rabbitTemplate.convertAndSend(RabbitMqConfig.EXCHANGE_FANOUT, RabbitMqConfig.ROUTINGKEY1,
                 message, correlationId);
     }
 }
