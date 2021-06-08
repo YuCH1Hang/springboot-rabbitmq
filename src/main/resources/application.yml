@@ -1,13 +1,38 @@
 spring:
   rabbitmq:
-    host: 116.85.32.90
+    host: 127.0.0.1 
     port: 5672
-    username: guest
-    password: guest
+    username: admin 
+    password: 123456
     publisher-confirms: true  #  消息发送到交换机确认机制,是否确认回调
     publisher-returns: true
+    vhost: /
   devtools:
     restart:
       enabled: false
+  datasource:
+    #driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/login?allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: admin 
+    password: 123456
+  resources:
+    static-locations: classpath:/templates  #访问静态页é~
+    #    servlet:
+    #      multipart:
+    #        max-file-size: 10KB 10MB 
+    #        max-request-size: 10KB 10MB 
 server:
   port: 8081
+upload:
+  path: /home/hilbertw
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+    hibernate: DEBUG
+  path: /home/hilbertw/logs
+  pattern:
+    file: '%d{yyyy-MMM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{15} - %msg%n'
+    console: '%d{yyyy-MMM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{15} - %msg%n' 
